@@ -1,0 +1,618 @@
+/* Variables & Fonts */
+:root {
+    --primary: #1a1a1a;
+    --accent: #6d9873;
+    --accent-orange: #e67e22;
+    --bg-soft: #f8f9fa;
+    --text-muted: #555;
+    --font-emphasis: 'Bricolage Grotesque', sans-serif;
+    --font-heading: 'Montserrat', sans-serif;
+    --font-body: 'Lato', sans-serif;
+
+    /* Amoeba Colors (Rotated: BRG) */
+    --amoeba-blue: rgba(155, 184, 137, 0.976);
+    --amoeba-green: rgb(162, 180, 218);
+
+    /* Japanese Fonts */
+    --font-ja-body: 'M PLUS 1', sans-serif;
+    --font-ja-heading: 'Zen Maru Gothic', sans-serif;
+}
+
+/* Japanese Font Overrides */
+html[lang="ja"] body {
+    font-family: var(--font-ja-body);
+}
+
+html[lang="ja"] h2,
+html[lang="ja"] h3,
+html[lang="ja"] h4,
+html[lang="ja"] .section-title,
+html[lang="ja"] .mv-name {
+    font-family: var(--font-ja-heading);
+    letter-spacing: 0.05em;
+    /* Zen Maru Gothic looks better with slight spacing */
+}
+
+
+
+/* Base Styles */
+body {
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    /* ~18px base */
+    color: var(--primary);
+    margin: 0;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px;
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+a:hover {
+    opacity: 0.7;
+}
+
+/* Header Layout */
+.header {
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(10px);
+    z-index: 1000;
+}
+
+.header .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 80px;
+}
+
+.header-left {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+}
+
+.header-logo a {
+    font-family: var(--font-emphasis);
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.lang-switch {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ccc;
+}
+
+.lang-switch a {
+    color: #aaa;
+}
+
+.lang-switch a.active {
+    color: var(--primary);
+}
+
+.header-logo a {
+    font-family: var(--font-emphasis);
+    font-size: 1.5rem;
+    color: var(--primary);
+}
+
+.lang-switch {
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #ccc;
+}
+
+.lang-switch a {
+    color: #aaa;
+}
+
+.lang-switch a.active {
+    color: var(--primary);
+}
+
+.gnav-list {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    font-family: var(--font-heading);
+    font-size: 0.75rem;
+    /* 少し大きく調整 */
+    letter-spacing: 0.08em;
+    margin: 0;
+    padding: 0;
+}
+
+.gnav-list a {
+    color: var(--primary);
+    position: relative;
+    padding-bottom: 5px;
+}
+
+.gnav-list a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+}
+
+.gnav-list a:hover::after {
+    width: 100%;
+}
+
+/* --- About Section (Layered Amoeba) --- */
+.mv {
+    padding: 120px 0 80px;
+}
+
+.mv-content {
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    margin-bottom: 40px;
+}
+
+.mv-left {
+    flex-shrink: 0;
+}
+
+.mv-photo-container {
+    position: relative;
+    width: 380px;
+    height: 380px;
+}
+
+/* Background Decoration Amoebas */
+.amoeba-bg {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 110%;
+    height: 110%;
+    z-index: -1;
+    border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+}
+
+@keyframes hue-shift {
+    0% {
+        filter: hue-rotate(180deg);
+    }
+
+    100% {
+        filter: hue-rotate(540deg);
+    }
+}
+
+.amoeba-blue {
+    background: var(--amoeba-blue);
+    animation: slow-rotate 25s linear infinite reverse, amoeba-pulse 8s infinite ease-in-out, hue-shift 7s linear infinite;
+}
+
+.amoeba-green {
+    background: var(--amoeba-green);
+    top: 5px;
+    left: 15px;
+    animation: slow-rotate 30s linear infinite, amoeba-pulse 10s infinite ease-in-out, hue-shift 5s linear infinite;
+}
+
+/* Intersection Masking CSS */
+.clip-blue-wrapper {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 110%;
+    height: 110%;
+    overflow: hidden;
+    /* Matches .amoeba-blue animation */
+    animation: slow-rotate 25s linear infinite reverse, amoeba-pulse 8s infinite ease-in-out;
+    border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+}
+
+.unrotate-blue-wrapper {
+    width: 100%;
+    height: 100%;
+    /* Counter-rotate blue */
+    animation: slow-rotate 25s linear infinite;
+}
+
+.clip-green-wrapper {
+    position: absolute;
+    /* Precise offset to match background amoeba positions */
+    /* Blue: -10, -10. Green: 5, 15. Diff: +15, +25 */
+    top: 15px;
+    left: 25px;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    /* Matches .amoeba-green animation */
+    animation: slow-rotate 30s linear infinite, amoeba-pulse 10s infinite ease-in-out;
+    border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+}
+
+.unrotate-green-wrapper {
+    width: 100%;
+    height: 100%;
+    /* Counter-rotate green */
+    animation: slow-rotate-reverse 30s linear infinite;
+}
+
+.mv-photo-final {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Center the zoomed image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.liquid-profile {
+    width: 115%;
+    /* Reduced zoom to be more natural */
+    height: 115%;
+    object-fit: cover;
+    position: absolute;
+    /* Center the absolute image */
+    top: -7.5%;
+    left: -7.5%;
+    /* Image stays static upright now due to counter-rotations */
+    cursor: pointer;
+    transition: opacity 0.5s ease;
+    opacity: 0;
+
+    /* Prevent direct interaction (download/drag) */
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+.liquid-profile.active {
+    opacity: 1;
+}
+
+@keyframes slow-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes slow-rotate-reverse {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
+
+@keyframes amoeba-pulse {
+
+    0%,
+    100% {
+        border-radius: 60% 40% 40% 60% / 60% 40% 60% 40%;
+    }
+
+    33% {
+        border-radius: 40% 60% 50% 50% / 40% 60% 40% 60%;
+    }
+
+    66% {
+        border-radius: 50% 50% 60% 40% / 60% 40% 60% 40%;
+    }
+}
+
+.mv-right {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.mv-name {
+    font-family: var(--font-emphasis);
+    font-size: 4.5rem;
+    /* 視覚的バランスのため微調整 */
+    margin: 0 0 25px;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.mv-intro {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    margin-bottom: 10px;
+}
+
+.supervisor-box {
+    background: var(--bg-soft);
+    padding: 15px 25px;
+    border-left: 4px solid var(--accent);
+    font-size: 0.95rem;
+    display: inline-block;
+}
+
+.mv-description {
+    font-size: 1rem;
+    color: var(--text-muted);
+    text-align: center;
+    max-width: 850px;
+    margin: 0 auto;
+    padding-top: 25px;
+}
+
+/* --- Research Section --- */
+.research-concept-title {
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    /* 微調整 */
+    color: var(--accent);
+    margin-bottom: 25px;
+}
+
+.philosophy-image-main {
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.concept-img-flat {
+    width: 100%;
+    max-width: 900px;
+    border-radius: 8px;
+}
+
+.philosophy-text-full p {
+    font-size: 1em;
+    /* 可読性のため微増 */
+    margin-bottom: 20px;
+    text-align: justify;
+}
+
+/* --- Section Global --- */
+.section {
+    padding: 80px 0;
+    /* border-top を削除 */
+}
+
+.section-title {
+    font-family: var(--font-heading);
+    font-size: 1.5em;
+    /* 目立たせるため大きく調整 */
+    margin-bottom: 35px;
+    letter-spacing: 0.12em;
+    display: inline-block;
+    border-bottom: 3px solid var(--accent);
+    padding-bottom: 5px;
+    transition: border-color 0.6s ease;
+}
+
+.section-title.jump-highlight {
+    border-color: var(--accent-orange) !important;
+}
+
+/* Biography */
+.bio-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    /* 縦のゆとりを微増 */
+}
+
+.bio-card h4 {
+    font-family: var(--font-heading);
+    font-size: 1em;
+    color: var(--accent);
+    margin-bottom: 15px;
+}
+
+.list-dots {
+    list-style: none;
+    /* ドットをCSSで制御するためnoneへ */
+    padding: 0;
+}
+
+.list-dots li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 10px;
+    font-size: 0.95em;
+}
+
+.list-dots li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+.history-list {
+    list-style: none;
+    padding: 0;
+}
+
+.history-list li {
+    font-size: 0.95em;
+    margin-bottom: 10px;
+    display: flex;
+    /* Flex layout for alignment */
+    align-items: baseline;
+    /* Align text baselines */
+    gap: 20px;
+    /* Space between date and Text */
+}
+
+.history-list li span {
+    font-weight: 700;
+    color: #888;
+    width: 200px;
+    /* Increased width to prevent wrapping */
+    flex-shrink: 0;
+    /* Prevent shrinking */
+}
+
+/* Publications */
+.pub-subheading {
+    font-family: var(--font-heading);
+    font-size: 0.85em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 25px 0 15px;
+}
+
+.pub-list {
+    list-style: none;
+    padding: 0;
+}
+
+.pub-list li {
+    font-size: 0.95em;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+}
+
+.pub-list li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+u {
+    text-decoration: none;
+    border-bottom: 2px solid var(--primary);
+    font-weight: 700;
+}
+
+.footer {
+    padding: 40px 0;
+    background: var(--bg-soft);
+    text-align: center;
+    font-size: 0.8rem;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (max-width: 960px) {
+
+    /* Header Adjustment for Mobile */
+    /* .header .container uses default flex, no override needed */
+
+    /* gnav becomes fixed overlay in mobile styles below, so it leaves normal flow */
+
+    .mv-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 40px;
+    }
+
+    .mv-photo-container {
+        width: 300px;
+        height: 300px;
+    }
+
+    .mv-name {
+        font-size: 3.5rem;
+    }
+}
+
+/* Responsive Mobile Menu */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 21px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 0;
+}
+
+.menu-toggle span {
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary);
+    transition: 0.3s;
+}
+
+/* Mobile Styles */
+@media (max-width: 1100px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .gnav {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.98);
+        backdrop-filter: blur(10px);
+        transition: 0.4s ease-in-out;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .gnav.active {
+        right: 0;
+    }
+
+    .gnav-list {
+        flex-direction: column;
+        align-items: center;
+        gap: 40px;
+        font-size: 1.2rem;
+    }
+
+    /* Close button animation or state */
+    .menu-toggle.active span:nth-child(1) {
+        transform: translateY(9px) rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+        transform: translateY(-9px) rotate(-45deg);
+    }
+}
