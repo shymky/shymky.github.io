@@ -389,6 +389,11 @@ a:hover {
     border-radius: 8px;
     display: block;
     margin: 0 auto;
+    /* Download Protection */
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-user-drag: none;
 }
 
 /* Side-by-side on larger screens */
