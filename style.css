@@ -134,7 +134,6 @@ a:hover {
     gap: 20px;
     font-family: var(--font-heading);
     font-size: 0.75rem;
-    /* 少し大きく調整 */
     letter-spacing: 0.08em;
     margin: 0;
     padding: 0;
@@ -383,6 +382,9 @@ a:hover {
     width: 100%;
     max-width: 900px;
     border-radius: 8px;
+    /* Center the image */
+    display: block;
+    margin: 0 auto;
 }
 
 .philosophy-text-full p {
@@ -419,7 +421,6 @@ a:hover {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    /* 縦のゆとりを微増 */
 }
 
 .bio-card h4 {
@@ -431,7 +432,6 @@ a:hover {
 
 .list-dots {
     list-style: none;
-    /* ドットをCSSで制御するためnoneへ */
     padding: 0;
 }
 

@@ -29,17 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             if (gnav) gnav.classList.remove('active');
+            const menuToggle = document.getElementById('menu-toggle');
+            if (menuToggle) menuToggle.classList.remove('active');
 
             const targetId = link.getAttribute('href');
             const targetSection = document.querySelector(targetId);
 
             if (targetSection) {
-                // Reset highlights
                 document.querySelectorAll('.section-title').forEach(title => {
                     title.classList.remove('jump-highlight');
                 });
-
-                // Perform scroll
                 window.scrollTo({
                     top: targetSection.offsetTop - headerHeight + 10,
                     behavior: 'smooth'
@@ -57,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // 4. Profile Image Toggle
     // 4. Profile Image Toggle
     const profileImages = document.querySelectorAll('.liquid-profile');
     const photoWrapper = document.querySelector('.mv-photo-final');
