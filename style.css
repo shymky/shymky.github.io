@@ -373,18 +373,32 @@ a:hover {
     margin-bottom: 25px;
 }
 
-.philosophy-image-main {
+.research-image-main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
     margin-bottom: 30px;
-    text-align: center;
 }
 
 .concept-img-flat {
     width: 100%;
+    /* Default for mobile (stacking) */
     max-width: 900px;
     border-radius: 8px;
-    /* Center the image */
     display: block;
     margin: 0 auto;
+}
+
+/* Side-by-side on larger screens */
+@media (min-width: 768px) {
+    .concept-img-flat {
+        width: calc(50% - 10px);
+        /* Share width minus gap */
+        margin: 0;
+        /* Reset auto margin */
+    }
 }
 
 .philosophy-text-full p {
